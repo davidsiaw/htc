@@ -32,11 +32,6 @@ As you can see the constructor of a class is basically the parameter list of a m
 
 A `perform` method then performs the core task of the method, and returns its results.
 
-Why so much fuss for such a simple method
------------------------------------------
-
-
-
 Testing
 -------
 
@@ -56,6 +51,51 @@ Languages without 'classes'
 ---------------------------
 
 Some languages that don't have classes as a language construct also actually have some sort of equivalent.
+
+In a language like C, a proto-form of classes already exists. The above addition thing can be written this way:
+
+```c
+/* the method */
+int add(int left, int right)
+{
+  return left + right;
+}
+
+/* the class */
+typedef struct _addition_method_t
+{
+  int left;
+  int right;
+} addition_method_t;
+
+addition_method_t* create_addition_method(int left, int right)
+{
+  addition_method_t* obj = malloc(sizeof(addition_method_t));
+  obj->left = left;
+  obj->right = right;
+  return obj;
+}
+
+void delete_addition_method(addition_method_t* obj)
+{
+  free(obj);
+}
+
+int addition_method_perform(addition_method_t* obj)
+{
+  return obj->left + obj->right;
+}
+
+int main()
+{
+  addition_method_t* obj = create_addition_method(1, 2);
+  int a = obj->perform();
+  delete_addition_method(obj);
+  
+  return 0;
+}
+```
+
 
 
 Algorithms and loops
